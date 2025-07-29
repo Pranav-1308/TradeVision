@@ -1,0 +1,29 @@
+/* Basic font setup */
+body { font-family: 'Inter', sans-serif; }
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(to right, #38bdf8, #c084fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Scroll Reveal Animation */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.7s ease-out;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Button Glow Effect */
+.glow-button {
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.5), 0 0 25px rgba(168, 85, 247, 0.3);
+    transition: box-shadow 0.3s ease-in-out;
+}
+.glow-button:hover {
+    box-shadow: 0 0 25px rgba(59, 130, 246, 0.8), 0 0 40px rgba(168, 85, 247, 0.5);
+}

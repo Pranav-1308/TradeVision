@@ -9,37 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     
-    <style>
-      /* Basic font setup */
-      body { font-family: 'Inter', sans-serif; }
-
-      /* Gradient Text */
-      .gradient-text {
-        background: linear-gradient(to right, #38bdf8, #c084fc);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-
-      /* Scroll Reveal Animation */
-      .reveal {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-      }
-      .reveal.visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      
-      /* Button Glow Effect */
-      .glow-button {
-          box-shadow: 0 0 15px rgba(59, 130, 246, 0.5), 0 0 25px rgba(168, 85, 247, 0.3);
-          transition: box-shadow 0.3s ease-in-out;
-      }
-      .glow-button:hover {
-          box-shadow: 0 0 25px rgba(59, 130, 246, 0.8), 0 0 40px rgba(168, 85, 247, 0.5);
-      }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-slate-900 text-white font-sans">
 
@@ -55,7 +25,7 @@
                     </linearGradient>
                 </defs>
             </svg>
-            <span class="text-xl font-bold text-white">TradeVision</span>
+            <span class="text-xl font-bold text-white">TradeVision!</span>
         </a>
         <nav class="hidden md:flex space-x-8">
             <a href="#features" class="text-slate-300 hover:text-white transition-colors duration-300">Features</a>
@@ -168,76 +138,7 @@
     </div>
 </footer>
 
-<script>
-    // --- SCROLL ANIMATIONS ---
-    const revealElements = document.querySelectorAll('.reveal');
-
-    const revealOnScroll = () => {
-        const windowHeight = window.innerHeight;
-        revealElements.forEach(el => {
-            const elementTop = el.getBoundingClientRect().top;
-            const elementVisible = 150; 
-
-            if (elementTop < windowHeight - elementVisible) {
-                el.classList.add('visible');
-            }
-        });
-    };
-
-    window.addEventListener('scroll', revealOnScroll);
-    revealOnScroll(); // Trigger on load
-
-    // --- BLOB ANIMATION ---
-    const blobAnimation = `
-        @keyframes blob {
-            0% { transform: translate(0px, 0px) scale(1); }
-            33% { transform: translate(30px, -50px) scale(1.1); }
-            66% { transform: translate(-20px, 20px) scale(0.9); }
-            100% { transform: translate(0px, 0px) scale(1); }
-        }
-    `;
-    const styleSheet = document.createElement("style");
-    styleSheet.type = "text/css";
-    styleSheet.innerText = blobAnimation;
-    document.head.appendChild(styleSheet);
-    
-    document.querySelectorAll('.animate-blob').forEach(blob => {
-        blob.style.animation = 'blob 7s infinite';
-    });
-    document.querySelectorAll('.animation-delay-2000').forEach(blob => {
-        blob.style.animationDelay = '2s';
-    });
-    document.querySelectorAll('.animation-delay-4000').forEach(blob => {
-        blob.style.animationDelay = '4s';
-    });
-
-    // --- VIEW SWITCHING LOGIC ---
-    const landingPageSections = [
-        document.getElementById('hero'),
-        document.getElementById('features'),
-        document.getElementById('about'),
-        document.getElementById('contact'),
-        document.getElementById('footer')
-    ];
-    const dashboardSection = document.getElementById('dashboard');
-    const startAnalyzingBtn = document.querySelector('.glow-button');
-    const getStartedNavBtn = document.getElementById('get-started-btn');
-
-    function showDashboard(event) {
-        event.preventDefault(); // Prevent the link from navigating
-
-        // Hide landing page sections
-        landingPageSections.forEach(section => section.classList.add('hidden'));
-
-        // Show the dashboard and a new footer
-        dashboardSection.classList.remove('hidden');
-        document.getElementById('footer').classList.remove('hidden'); // Ensure footer is visible on dashboard
-    }
-
-    startAnalyzingBtn.addEventListener('click', showDashboard);
-    getStartedNavBtn.addEventListener('click', showDashboard);
-
-</script>
+<script src="scripts.js"></script>
 
 </body>
 </html>
