@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TradeVision - AI Stock Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+      /* Basic font setup */
+      body { font-family: 'Inter', sans-serif; }
+
+      /* Gradient Text */
+      .gradient-text {
+        background: linear-gradient(to right, #38bdf8, #c084fc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      /* Scroll Reveal Animation */
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      
+      /* Button Glow Effect */
+      .glow-button {
+          box-shadow: 0 0 15px rgba(59, 130, 246, 0.5), 0 0 25px rgba(168, 85, 247, 0.3);
+          transition: box-shadow 0.3s ease-in-out;
+      }
+      .glow-button:hover {
+          box-shadow: 0 0 25px rgba(59, 130, 246, 0.8), 0 0 40px rgba(168, 85, 247, 0.5);
+      }
+    </style>
+</head>
+<body class="bg-slate-900 text-white font-sans">
+
+<header class="fixed top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-lg border-b border-slate-800">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <a href="#" class="flex items-center space-x-2">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path id="logo-path" d="M12 2L2 7L12 12L22 7L12 2Z M2 17L12 22L22 17L12 12L2 17Z M2 12L12 17L22 12" stroke="url(#logo-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <defs>
+                    <linearGradient id="logo-gradient" x1="2" y1="12" x2="22" y2="12" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#38bdf8"/>
+                        <stop offset="1" stop-color="#c084fc"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+            <span class="text-xl font-bold text-white">TradeVision</span>
+        </a>
+        <nav class="hidden md:flex space-x-8">
+            <a href="#features" class="text-slate-300 hover:text-white transition-colors duration-300">Features</a>
+            <a href="#about" class="text-slate-300 hover:text-white transition-colors duration-300">About</a>
+            <a href="#contact" class="text-slate-300 hover:text-white transition-colors duration-300">Contact</a>
+        </nav>
+        <a href="#" id="get-started-btn" class="hidden md:block bg-indigo-500 text-white px-5 py-2 rounded-lg font-semibold hover:bg-indigo-600 transition-all duration-300">Get Started</a>
+    </div>
+</header>
+
+<main>
+    <section id="hero" class="min-h-screen flex items-center justify-center text-center pt-20 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full opacity-10">
+            <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-500 rounded-full mix-blend-screen filter blur-3xl animate-blob"></div>
+            <div class="absolute top-1/2 right-1/4 w-64 h-64 bg-sky-500 rounded-full mix-blend-screen filter blur-3xl animate-blob animation-delay-2000"></div>
+            <div class="absolute bottom-1/4 left-1/3 w-64 h-64 bg-indigo-500 rounded-full mix-blend-screen filter blur-3xl animate-blob animation-delay-4000"></div>
+        </div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-black uppercase reveal">
+                Smarter Trading <span class="gradient-text">Starts Here</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-400 mt-6 max-w-3xl mx-auto reveal" style="transition-delay: 200ms;">
+                Leverage the power of AI for stock market analysis and prediction. Make data-driven decisions with confidence.
+            </p>
+            <div class="mt-10 reveal" style="transition-delay: 400ms;">
+                <a href="#" class="glow-button inline-block bg-gradient-to-r from-sky-500 to-indigo-600 text-white font-bold text-lg px-10 py-4 rounded-lg">
+                    Start Analyzing
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="dashboard" class="hidden min-h-screen container mx-auto px-6 py-24 flex items-center justify-center">
+        <div class="bg-slate-800/50 p-8 rounded-2xl shadow-2xl w-full max-w-4xl">
+            <h2 class="text-3xl font-bold mb-6">TradeVision Dashboard</h2>
+            
+            <div class="flex flex-col md:flex-row gap-4 mb-8">
+                <input id="stock-ticker-input" type="text" placeholder="Enter Stock Ticker (e.g., AAPL)" class="flex-grow bg-slate-700 text-white placeholder-slate-400 px-4 py-3 rounded-lg border-2 border-transparent focus:border-sky-500 focus:outline-none transition">
+                <button id="analyze-btn" class="bg-sky-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-sky-600 transition-all duration-300">
+                    Analyze
+                </button>
+            </div>
+
+            <div id="results-container" class="space-y-6">
+                <p class="text-slate-400">Enter a stock ticker and click "Analyze" to see the results.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold reveal">The Future of Market Analysis</h2>
+                <p class="text-slate-400 mt-2 reveal" style="transition-delay: 150ms;">The features that give you a competitive edge.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card p-8 rounded-2xl reveal">
+                    <div class="text-4xl mb-4">📈</div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Real-Time Data</h3>
+                    <p class="text-slate-400">Access up-to-the-second market data to ensure you never miss a beat.</p>
+                </div>
+                <div class="card p-8 rounded-2xl reveal" style="transition-delay: 200ms;">
+                    <div class="text-4xl mb-4">🤖</div>
+                    <h3 class="text-2xl font-bold text-white mb-2">AI-Powered Predictions</h3>
+                    <p class="text-slate-400">Our advanced algorithms analyze market trends to forecast future movements.</p>
+                </div>
+                <div class="card p-8 rounded-2xl reveal" style="transition-delay: 400ms;">
+                    <div class="text-4xl mb-4">📊</div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Intuitive Visualizations</h3>
+                    <p class="text-slate-400">Complex data made simple through beautiful and interactive charts.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-20 bg-slate-900/40">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2 reveal">
+                    <img src="https://placehold.co/600x400/1e293b/e2e8f0?text=Analytics+Dashboard" alt="Analytics Dashboard" class="rounded-2xl shadow-2xl w-full">
+                </div>
+                <div class="md:w-1/2 reveal" style="transition-delay: 200ms;">
+                    <h2 class="text-4xl font-bold mb-4">Built by <span class="gradient-text">Quants & Engineers</span></h2>
+                    <p class="text-slate-400 mb-4">We're a team of data scientists, financial analysts, and engineers dedicated to democratizing market intelligence. Our passion is building tools that give you an edge.</p>
+                    <p class="text-slate-400">We thrive on data, algorithms, and market dynamics.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-20">
+        <div class="container mx-auto px-6 text-center">
+             <h2 class="text-4xl font-bold reveal">Get in Touch</h2>
+             <p class="text-slate-400 mt-2 mb-8 max-w-xl mx-auto reveal" style="transition-delay: 150ms;">
+                 Have a question, an idea, or want to request a demo? Drop us a line.
+             </p>
+             <div class="reveal" style="transition-delay: 300ms;">
+                 <a href="mailto:hello@tradevision.com" class="glow-button inline-block bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold text-lg px-10 py-4 rounded-lg">
+                     Contact Us
+                 </a>
+             </div>
+        </div>
+    </section>
+</main>
+
+<footer id="footer" class="border-t border-slate-800 py-8">
+    <div class="container mx-auto px-6 text-center text-slate-500">
+        <p>&copy; 2025 TradeVision. All Rights Reserved. Trade Smarter.</p>
+    </div>
+</footer>
+
+<script>
+    // --- SCROLL ANIMATIONS ---
+    const revealElements = document.querySelectorAll('.reveal');
+
+    const revealOnScroll = () => {
+        const windowHeight = window.innerHeight;
+        revealElements.forEach(el => {
+            const elementTop = el.getBoundingClientRect().top;
+            const elementVisible = 150; 
+
+            if (elementTop < windowHeight - elementVisible) {
+                el.classList.add('visible');
+            }
+        });
+    };
+
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll(); // Trigger on load
+
+    // --- BLOB ANIMATION ---
+    const blobAnimation = `
+        @keyframes blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+    `;
+    const styleSheet = document.createElement("style");
+    styleSheet.type = "text/css";
+    styleSheet.innerText = blobAnimation;
+    document.head.appendChild(styleSheet);
+    
+    document.querySelectorAll('.animate-blob').forEach(blob => {
+        blob.style.animation = 'blob 7s infinite';
+    });
+    document.querySelectorAll('.animation-delay-2000').forEach(blob => {
+        blob.style.animationDelay = '2s';
+    });
+    document.querySelectorAll('.animation-delay-4000').forEach(blob => {
+        blob.style.animationDelay = '4s';
+    });
+
+    // --- VIEW SWITCHING LOGIC ---
+    const landingPageSections = [
+        document.getElementById('hero'),
+        document.getElementById('features'),
+        document.getElementById('about'),
+        document.getElementById('contact'),
+        document.getElementById('footer')
+    ];
+    const dashboardSection = document.getElementById('dashboard');
+    const startAnalyzingBtn = document.querySelector('.glow-button');
+    const getStartedNavBtn = document.getElementById('get-started-btn');
+
+    function showDashboard(event) {
+        event.preventDefault(); // Prevent the link from navigating
+
+        // Hide landing page sections
+        landingPageSections.forEach(section => section.classList.add('hidden'));
+
+        // Show the dashboard and a new footer
+        dashboardSection.classList.remove('hidden');
+        document.getElementById('footer').classList.remove('hidden'); // Ensure footer is visible on dashboard
+    }
+
+    startAnalyzingBtn.addEventListener('click', showDashboard);
+    getStartedNavBtn.addEventListener('click', showDashboard);
+
+</script>
+
+</body>
+</html>
